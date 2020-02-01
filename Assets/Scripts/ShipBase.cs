@@ -23,6 +23,9 @@ public class ShipBase : MonoBehaviour
     // parameters related to firing
     public GameObject bulletType;
 
+    // sounds!
+    public AudioSource damageSound;
+
     // boolean state parameters
     public bool canMove = true;
     public bool canFire = true;
@@ -42,7 +45,14 @@ public class ShipBase : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         healthCurrent -= damage;
-        if (healthCurrent <= 0)
+        if (healthCurrent > 0)
+        {
+            if (damageSound)
+            {
+                damageSound.Play();
+            }
+        }
+        else
         {
             // BOOM! BLOW UP!
             Destroy(gameObject);
