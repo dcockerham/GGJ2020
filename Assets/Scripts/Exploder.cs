@@ -22,8 +22,8 @@ public class Exploder : MonoBehaviour
     {
         if (particles != null && particles.isPlaying)
         {
-            var p = particles.time / particles.main.duration;
-            sprite.color = Color.Lerp(fadeFrom, fadeTo, p);
+            var particleTime = particles.time / particles.main.duration;
+            sprite.color = Color.Lerp(fadeFrom, fadeTo, particleTime);
         }
     }
 
