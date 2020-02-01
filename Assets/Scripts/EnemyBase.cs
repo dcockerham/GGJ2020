@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class EnemyBase : ShipBase
 {
-    // movement speed
-    public float moveSpeedX;
-    public float moveSpeedY;
-
     // parameters related to firing
-    public GameObject bulletType;
     protected float fireTimer;
     public float fireDelay;
     public float fireDelayVariance;
 
-    // boolean state parameters
-    public bool isMoving;
+    public bool randomizeStartDirection = false;
     
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        fireTimer = fireDelay + Random.Range(-fireDelayVariance, fireDelayVariance);
+        fireTimer = Random.Range(0f, fireDelay) + Random.Range(-fireDelayVariance, fireDelayVariance);
+
+        if (randomizeStartDirection && Random.Range(0, 2) == 1)
+        {
+            moveSpeedX *= -1f;
+        }
+
+        GameManager.instance.EnemySpawned();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.EnemyDestroyed();
     }
 
     // Update is called once per frame
@@ -30,7 +36,7 @@ public class EnemyBase : ShipBase
     {
         // handle movement
         Vector3 newPos = transform.position;
-        if (isMoving)
+        if (canMove)
         {
             //transform.Translate(moveSpeedX * Time.deltaTime, moveSpeedY * Time.deltaTime, 0f);
             newPos.x += moveSpeedX * Time.deltaTime;
@@ -39,17 +45,15 @@ public class EnemyBase : ShipBase
         transform.position = newPos;
 
         // handle firing
-        fireTimer -= Time.deltaTime;
-        if (fireTimer <= 0f)
+        if (canFire)
         {
-            FireBullet();
-            fireTimer = fireDelay + Random.Range(-fireDelayVariance, fireDelayVariance);
+            fireTimer -= Time.deltaTime;
+            if (fireTimer <= 0f)
+            {
+                FireBullet();
+                fireTimer = fireDelay + Random.Range(-fireDelayVariance, fireDelayVariance);
+            }
         }
-    }
-
-    void FireBullet()
-    {
-        Instantiate(bulletType, transform.position, Quaternion.identity);
     }
 
     void OnTriggerEnter2D(Collider2D col)

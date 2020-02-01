@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4253696213115934588}
   m_Layer: 0
   m_Name: EnemyShip
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,9 +52,11 @@ MonoBehaviour:
   moveSpeedY: 0
   bulletType: {fileID: 5642632238711472503, guid: da4cd668dba4eb446af15dca5fbd14c1,
     type: 3}
-  fireDelay: 5
-  fireDelayVariance: 0
-  isMoving: 1
+  canMove: 1
+  canFire: 1
+  fireDelay: 7
+  fireDelayVariance: 2
+  randomizeStartDirection: 1
 --- !u!58 &4253696213115934588
 CircleCollider2D:
   m_ObjectHideFlags: 0
