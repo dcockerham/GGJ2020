@@ -12,7 +12,6 @@ public class PlayerBase : ShipBase
 
     // track relevant objects
     public GameObject tractorBeam;
-    public List<GameObject> fireSources;
 
 
     // Update is called once per frame
@@ -47,13 +46,5 @@ public class PlayerBase : ShipBase
     private void OnDestroy()
     {
         GameManager.instance.GameOver();
-    }
-
-    public override void FireBullet()
-    {
-        foreach (GameObject fireSource in fireSources)
-        {
-            Instantiate(bulletType, fireSource.transform.position, Quaternion.identity);
-        }
     }
 }

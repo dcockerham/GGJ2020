@@ -459,6 +459,8 @@ MonoBehaviour:
   moveSpeedY: 0
   bulletType: {fileID: 6432952044199730253, guid: 34209a49070eaf34183aeab232d5eb2d,
     type: 3}
+  deathEffect: {fileID: 5773115105839556227, guid: c2a1998876f895a45bdb00d35cca4930,
+    type: 3}
   damageSound: {fileID: 4411823152506007129}
   canMove: 1
   canFire: 1

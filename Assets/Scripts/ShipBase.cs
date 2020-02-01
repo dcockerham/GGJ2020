@@ -20,8 +20,10 @@ public class ShipBase : MonoBehaviour
     public float moveSpeedX;
     public float moveSpeedY;
 
-    // parameters related to firing
+    // GameObjects that we need (bullets, explosions, etc.)
     public GameObject bulletType;
+    public GameObject deathEffect;
+    public List<GameObject> fireSources;
 
     // sounds!
     public AudioSource damageSound;
@@ -39,7 +41,20 @@ public class ShipBase : MonoBehaviour
 
     public virtual void FireBullet()
     {
-        Instantiate(bulletType, transform.position, Quaternion.identity);
+        if (bulletType)
+        {
+            if (fireSources.Count <= 0)
+            {
+                Instantiate(bulletType, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                foreach (GameObject fireSource in fireSources)
+                {
+                    Instantiate(bulletType, fireSource.transform.position, Quaternion.identity);
+                }
+            }
+        }
     }
 
     public virtual void TakeDamage(float damage)
@@ -55,8 +70,17 @@ public class ShipBase : MonoBehaviour
         else
         {
             // BOOM! BLOW UP!
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    public virtual void Die()
+    {
+        if (deathEffect)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
     }
 
     public virtual void BulletCollision(Collider2D col)
