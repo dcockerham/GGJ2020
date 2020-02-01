@@ -12,8 +12,20 @@ public class BulletBase : MonoBehaviour
     public float moveSpeedY;
 
     // how much damage?
-    public int damage;
+    public float damage;
 
+
+    private void Start()
+    {
+        // apply difficulty mods (enemy bullets only)
+        if (bulletTeam == ShipBase.Team.EnemyTeam)
+        {
+            DifficultyManager difficultyManager = DifficultyManager.instance;
+            moveSpeedX *= difficultyManager.getMoveSpeedMod();
+            moveSpeedY *= difficultyManager.getMoveSpeedMod();
+            damage = damage * difficultyManager.getDamageMod();
+        }
+    }
 
     // Update is called once per frame
     public virtual void Update()

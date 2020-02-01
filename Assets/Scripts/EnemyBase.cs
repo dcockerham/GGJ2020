@@ -15,19 +15,32 @@ public class EnemyBase : ShipBase
     // Start is called before the first frame update
     public override void Start()
     {
+        // set up difficulty mods
+        DifficultyManager difficultyManager = DifficultyManager.instance;
+        healthMax = healthMax * difficultyManager.getHealthMod();
+        moveSpeedX *= difficultyManager.getMoveSpeedMod();
+        moveSpeedY *= difficultyManager.getMoveSpeedMod();
+        fireDelay /= difficultyManager.getFiringSpeedMod();
+        fireDelayVariance /= difficultyManager.getFiringSpeedMod();
+
         base.Start();
+
+        // randomize the firing timer
         fireTimer = Random.Range(0f, fireDelay) + Random.Range(-fireDelayVariance, fireDelayVariance);
 
+        // randomize direction? if we want to
         if (randomizeStartDirection && Random.Range(0, 2) == 1)
         {
             moveSpeedX *= -1f;
         }
 
+        // add the enemy to the game manager for tracking
         GameManager.instance.EnemySpawned();
     }
 
     private void OnDestroy()
     {
+        // remove the enemy from the game manager
         GameManager.instance.EnemyDestroyed();
     }
 

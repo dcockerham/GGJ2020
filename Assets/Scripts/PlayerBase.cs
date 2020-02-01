@@ -8,6 +8,11 @@ public class PlayerBase : ShipBase
     public KeyCode leftKeyCode = KeyCode.LeftArrow;
     public KeyCode rightKeyCode = KeyCode.RightArrow;
     public KeyCode fireKeyCode = KeyCode.Space;
+    public KeyCode tractorKeyCode = KeyCode.RightShift;
+
+    // track relevant objects
+    public GameObject tractorBeam;
+    public List<GameObject> fireSources;
 
 
     // Update is called once per frame
@@ -32,10 +37,23 @@ public class PlayerBase : ShipBase
         {
             FireBullet();
         }
+
+        if (Input.GetKey(tractorKeyCode) != tractorBeam.activeSelf)
+        {
+            tractorBeam.SetActive(!tractorBeam.activeSelf);
+        }
     }
 
     private void OnDestroy()
     {
         GameManager.instance.GameOver();
+    }
+
+    public override void FireBullet()
+    {
+        foreach (GameObject fireSource in fireSources)
+        {
+            Instantiate(bulletType, fireSource.transform.position, Quaternion.identity);
+        }
     }
 }

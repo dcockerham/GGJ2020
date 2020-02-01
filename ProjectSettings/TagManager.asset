@@ -7,6 +7,8 @@ TagManager:
   - boundary
   - bullet
   - enemy
+  - item
+  - sucker
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - ShipLayer
+  - ItemLayer
+  - BulletLayer
   - 
   - 
   - 

@@ -13,8 +13,8 @@ public class ShipBase : MonoBehaviour
     public Team shipTeam;
     
     // health of the ship
-    public int healthMax;
-    public int healthCurrent;
+    public float healthMax;
+    public float healthCurrent;
 
     // movement speed
     public float moveSpeedX;
@@ -39,7 +39,7 @@ public class ShipBase : MonoBehaviour
         Instantiate(bulletType, transform.position, Quaternion.identity);
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         healthCurrent -= damage;
         if (healthCurrent <= 0)
