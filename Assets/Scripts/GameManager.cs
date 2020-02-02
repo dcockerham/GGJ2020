@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
         {
             print("~=STAGE CLEAR=~");
             playState = PlayState.Other;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

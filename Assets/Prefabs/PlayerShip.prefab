@@ -432,7 +432,7 @@ Transform:
   m_GameObject: {fileID: 5840423232587576563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.97, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 5840423231389314529}
   - {fileID: 2016739961507141875}
@@ -461,17 +461,13 @@ MonoBehaviour:
     type: 3}
   deathEffect: {fileID: 5773115105839556227, guid: c2a1998876f895a45bdb00d35cca4930,
     type: 3}
-  damageSound: {fileID: 4411823152506007129}
-  canMove: 1
-  canFire: 1
-  leftKeyCode: 276
-  rightKeyCode: 275
-  fireKeyCode: 32
-  tractorKeyCode: 303
-  tractorBeam: {fileID: 409847170051392254}
   fireSources:
   - {fileID: 4536295929637651492}
   - {fileID: 0}
+  damageSound: {fileID: 4411823152506007129}
+  canMove: 1
+  canFire: 1
+  tractorBeam: {fileID: 409847170051392254}
 --- !u!58 &5840423232587576560
 CircleCollider2D:
   m_ObjectHideFlags: 0
