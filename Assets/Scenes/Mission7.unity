@@ -5233,6 +5233,11 @@ PrefabInstance:
       propertyPath: gameOverSelector
       value: 
       objectReference: {fileID: 1251821299}
+    - target: {fileID: 6868945068018395977, guid: 769a498caa4f84c4692a7dad37cb4c2f,
+        type: 3}
+      propertyPath: introPanel
+      value: 
+      objectReference: {fileID: 258147598}
     - target: {fileID: 6868945068018395978, guid: 769a498caa4f84c4692a7dad37cb4c2f,
         type: 3}
       propertyPath: m_Name
