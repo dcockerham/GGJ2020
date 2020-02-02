@@ -14,6 +14,8 @@ public class BulletBase : MonoBehaviour
     // how much damage?
     public float damage;
 
+    public bool persistentBullet = false;
+
 
     private void Start()
     {
@@ -44,6 +46,9 @@ public class BulletBase : MonoBehaviour
 
     public virtual void Impact()
     {
-        Destroy(gameObject);
+        if (!persistentBullet)
+        {
+            Destroy(gameObject);
+        }
     }
 }

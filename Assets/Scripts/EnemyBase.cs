@@ -46,7 +46,7 @@ public class EnemyBase : ShipBase
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         // handle movement
         Vector3 newPos = transform.position;
