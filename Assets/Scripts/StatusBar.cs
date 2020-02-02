@@ -39,6 +39,7 @@ public class StatusBar : MonoBehaviour
             numLives = (int)Mathf.Max(playerStats.healthCurrent, 0);
         }
 
+        // Update life bar state to match the game state.
         var deltaLives = numLives - remainingLives.Count;
         if (deltaLives > 0)
         {
@@ -52,12 +53,16 @@ public class StatusBar : MonoBehaviour
 
     private void AddLives(int numLives = 1)
     {
+        var prevLife = (remainingLives.Count != 0) ? remainingLives.Peek() : lifePrefab;
         for (int i = 0; i < numLives; i++)
         {
-            var nextLife = Instantiate(lifePrefab, transform);
-            if (lifePrefab.TryGetComponent(out RectTransform rectTransform))
+            // Place life icons adjacent to each other.
+            var nextLife = Instantiate(prevLife, transform);
+            if (prevLife.TryGetComponent(out RectTransform rectTransform))
             {
-                nextLife.transform.Translate(new Vector3(16 * i, 0));
+                // Get the size of each icon.
+                var xScale = rectTransform.sizeDelta.x * prevLife.transform.localScale.x;
+                nextLife.transform.Translate(new Vector3(xScale * i, 0));
             }
             remainingLives.Push(nextLife);
         }
@@ -65,14 +70,15 @@ public class StatusBar : MonoBehaviour
 
     private void RemoveLives(int numLives = 1)
     {
+        // Fade out lost lives.
         for (int i = 0; i < numLives; i++)
         {
             var lastLife = remainingLives.Pop();
-            StartCoroutine(FlashLifeIcon(lastLife));
+            StartCoroutine(FadeOutLifeIcon(lastLife));
         }
     }
 
-    private IEnumerator FlashLifeIcon(GameObject lastLife)
+    private IEnumerator FadeOutLifeIcon(GameObject lastLife)
     {
         Image fadeImage = lastLife.GetComponent<Image>();
         if (fadeImage == null)
@@ -86,8 +92,9 @@ public class StatusBar : MonoBehaviour
         while (fadeImage.color != fadeTo)
         {
             fadeImage.color = Color.Lerp(fadeFrom, fadeTo, fadeDuration / fadeTime);
-            yield return null; // After update.
+            yield return null; // Wait for after update.
             fadeDuration += Time.deltaTime;
         }
+        Destroy(lastLife);
     }
 }
