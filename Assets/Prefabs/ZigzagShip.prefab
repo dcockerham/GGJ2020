@@ -137,7 +137,7 @@ MonoBehaviour:
   healthMax: 2
   healthCurrent: 0
   moveSpeedX: -3
-  moveSpeedY: -0.3
+  moveSpeedY: -0.15
   bulletType: {fileID: 5642632238711472503, guid: da4cd668dba4eb446af15dca5fbd14c1,
     type: 3}
   deathEffect: {fileID: 5773115105839556227, guid: c2a1998876f895a45bdb00d35cca4930,

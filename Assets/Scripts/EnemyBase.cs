@@ -74,8 +74,15 @@ public class EnemyBase : ShipBase
     {
         if (col.gameObject.CompareTag("boundary") && !ignoringBoundaries)
         {
-            // if we hit the edge of the screen, reverse direction
-            moveSpeedX *= -1;
+            if (col.gameObject.name == "LowerBound")
+            {
+                moveSpeedY = 0;
+            }
+            else
+            {
+                // if we hit the edge of the screen, reverse direction
+                moveSpeedX *= -1;
+            }
         }
         else if (col.gameObject.CompareTag("bullet"))
         {
