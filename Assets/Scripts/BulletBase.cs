@@ -17,7 +17,7 @@ public class BulletBase : MonoBehaviour
     public bool persistentBullet = false;
 
 
-    private void Start()
+    public virtual void Start()
     {
         // apply difficulty mods (enemy bullets only)
         if (bulletTeam == ShipBase.Team.EnemyTeam)
