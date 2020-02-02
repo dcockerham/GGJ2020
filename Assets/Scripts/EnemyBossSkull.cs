@@ -16,6 +16,11 @@ public class EnemyBossSkull : EnemyBase
 
     public bool isShaking;
     public bool isFiringBeam;
+    public bool soundStarting;
+
+    public AudioSource soundBeamStart;
+    public AudioSource soundBeamLoop;
+    public AudioSource soundBeamEnd;
 
     // Start is called before the first frame update
     public override void Start()
@@ -27,6 +32,7 @@ public class EnemyBossSkull : EnemyBase
 
         isShaking = false;
         isFiringBeam = false;
+        soundStarting = false;
     }
 
     // Update is called once per frame
@@ -55,6 +61,13 @@ public class EnemyBossSkull : EnemyBase
             Vector3 newScale = myBeam.transform.localScale;
             newScale.x = Mathf.Lerp(0f, 3f, (beamFiringLength - beamFiringTimer) / beamFiringLength * 2);
             myBeam.transform.localScale = newScale;
+
+            if (soundStarting && !soundBeamStart.isPlaying)
+            {
+                soundBeamStart.Stop();
+                soundBeamLoop.Play();
+                soundStarting = false;
+            }
         }
     }
 
@@ -71,15 +84,18 @@ public class EnemyBossSkull : EnemyBase
         isShaking = true;
         yield return new WaitForSeconds(2f);
         myBeam = Instantiate(beamWeapon, beamFiringPoint.transform.position, Quaternion.identity);
-        //myBeam.transform.SetParent(gameObject.transform);
         myBeam.transform.parent = gameObject.transform;
         myBeam.transform.localPosition = new Vector2(myBeam.transform.localPosition.x, -3.580775f);
         isFiringBeam = true;
         beamFiringTimer = beamFiringLength;
+        soundBeamStart.Play();
+        soundStarting = true;
         yield return new WaitForSeconds(beamFiringLength);
         beamTimer = beamDelay + Random.Range(-beamDelayVariance, beamDelayVariance);
         Destroy(myBeam);
         canFire = true;
         isFiringBeam = false;
+        soundBeamLoop.Stop();
+        soundBeamEnd.Play();
     }
 }

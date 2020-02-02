@@ -8,6 +8,8 @@ public class LightningBolt : BulletBase
     protected float boltTimer;
     public Collider2D boltCollider;
     protected FlashingScript boltFlasher;
+
+    public AudioSource boltSound;
     
     // Start is called before the first frame update
     void Awake()
@@ -40,5 +42,9 @@ public class LightningBolt : BulletBase
         boltCollider.enabled = false;
         gameObject.SetActive(true);
         boltFlasher.StartFlashing();
+        if (boltSound)
+        {
+            boltSound.Play();
+        }
     }
 }

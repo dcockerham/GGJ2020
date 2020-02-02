@@ -24,10 +24,19 @@ public class BombBullet : BulletBase
 
     public override void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("boundary") || col.gameObject.CompareTag("bullet"))
+        if (col.gameObject.CompareTag("boundary"))
         {
             // if we hit the edge of the screen (or another bullet), we're done! impact!
             Impact();
+        }
+        if (col.gameObject.CompareTag("bullet"))
+        {
+            BulletBase bullet = col.GetComponent<BulletBase>();
+            if (bullet && bulletTeam != bullet.bulletTeam)
+            {
+                bullet.Impact();
+                Impact();
+            }
         }
     }
 

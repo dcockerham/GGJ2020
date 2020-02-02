@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
 
     public int numLivingEnemies;
 
+    public AudioSource mainMusic;
+    public AudioSource loseMusic;
+
     public enum PlayState
     {
         Title,
@@ -46,17 +49,36 @@ public class GameManager : MonoBehaviour
     public GameObject pauseSelector;
     public GameObject gameOverPanel;
     public GameObject gameOverSelector;
+    public GameObject introPanel;
 
 
     private void Awake()
     {
         instance = this;
-        playState = PlayState.Playing;
+        if (introPanel)
+        {
+            playState = PlayState.Title;
+            introPanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            playState = PlayState.Playing;
+        }
     }
 
     private void Update()
     {
-        if (playState == PlayState.Pause)
+        if (playState == PlayState.Title)
+        {
+            if (Input.GetKeyDown(fireKeyCode) || Input.GetKeyDown(pauseKeyCode))
+            {
+                playState = PlayState.Playing;
+                introPanel.SetActive(false);
+                Time.timeScale = 1f;
+            }
+        }
+        else if (playState == PlayState.Pause)
         {
             if (Input.GetKeyDown(upKeyCode))
             {
@@ -145,6 +167,14 @@ public class GameManager : MonoBehaviour
             playState = PlayState.GameOver;
             gameOverPanel.SetActive(true);
             SetGameOverSelector(0);
+            if (loseMusic)
+            {
+                loseMusic.Play();
+                if (mainMusic)
+                {
+                    mainMusic.Stop();
+                }
+            }
         }
     }
 

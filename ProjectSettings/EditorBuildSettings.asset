@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ProtoLevel2.unity
     guid: ea96b4bd632959a41b752793683ed83a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TitleScreen.unity
     guid: d47c0232a47f0e642aebda6c1dcb8552
   - enabled: 1

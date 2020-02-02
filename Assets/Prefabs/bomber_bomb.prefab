@@ -51,7 +51,8 @@ MonoBehaviour:
   moveSpeedY: -2
   damage: 1
   persistentBullet: 0
-  explodeObject: {fileID: 0}
+  explodeObject: {fileID: 337435850679453336, guid: 079866754ce1eca47a5473748a09a014,
+    type: 3}
   isDocked: 0
 --- !u!212 &9163175136080832699
 SpriteRenderer:
