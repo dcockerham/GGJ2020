@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
                         break;
                     case (int)PauseOptions.Quit:
                         // return to the title screen?
+                        SceneManager.LoadScene(0);
                         break;
                     default:
                         break;
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
                         break;
                     case (int)GameOverOptions.Quit:
                         // return to the title screen?
+                        SceneManager.LoadScene(0);
                         break;
                     default:
                         break;

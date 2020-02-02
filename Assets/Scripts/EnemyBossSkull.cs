@@ -97,5 +97,6 @@ public class EnemyBossSkull : EnemyBase
         isFiringBeam = false;
         soundBeamLoop.Stop();
         soundBeamEnd.Play();
+        beamParticles.SetActive(false);
     }
 }
