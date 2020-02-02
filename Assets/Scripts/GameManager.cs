@@ -170,9 +170,6 @@ public class GameManager : MonoBehaviour
         if (playState == PlayState.Playing)
         {
             print("_//GAME OVER\\\\_");
-            playState = PlayState.GameOver;
-            gameOverPanel.SetActive(true);
-            SetGameOverSelector(0);
             if (loseMusic)
             {
                 loseMusic.Play();
@@ -181,7 +178,15 @@ public class GameManager : MonoBehaviour
                     mainMusic.Stop();
                 }
             }
+            Invoke("GameOverPart2", 1.0f);
         }
+    }
+
+    public void GameOverPart2()
+    {
+        playState = PlayState.GameOver;
+        gameOverPanel.SetActive(true);
+        SetGameOverSelector(0);
     }
 
     public void PauseGame()

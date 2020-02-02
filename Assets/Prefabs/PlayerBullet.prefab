@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletTeam: 0
   moveSpeedX: 0
-  moveSpeedY: 10
+  moveSpeedY: 12
   damage: 1
   persistentBullet: 0
 --- !u!58 &2564348110493573530

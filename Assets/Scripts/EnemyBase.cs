@@ -27,7 +27,7 @@ public class EnemyBase : ShipBase
         base.Start();
 
         // randomize the firing timer
-        fireTimer = Random.Range(0f, fireDelay) + Random.Range(-fireDelayVariance, fireDelayVariance);
+        fireTimer = Random.Range(1f, fireDelay) + Random.Range(-fireDelayVariance, fireDelayVariance);
 
         // randomize direction? if we want to
         if (randomizeStartDirection && Random.Range(0, 2) == 1)
