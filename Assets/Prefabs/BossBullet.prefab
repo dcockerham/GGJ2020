@@ -131,7 +131,7 @@ MonoBehaviour:
   bulletTeam: 1
   moveSpeedX: 0
   moveSpeedY: -8
-  damage: 2
+  damage: 1
   persistentBullet: 0
 --- !u!58 &4830846914828174978
 CircleCollider2D:

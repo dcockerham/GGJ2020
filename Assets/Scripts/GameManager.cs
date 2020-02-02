@@ -98,10 +98,12 @@ public class GameManager : MonoBehaviour
                     case (int)PauseOptions.Retry:
                         // restart the scene?
                         PauseGame();
+                        playState = PlayState.Other;
                         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                         break;
                     case (int)PauseOptions.Quit:
                         // return to the title screen?
+                        playState = PlayState.Other;
                         SceneManager.LoadScene(0);
                         break;
                     default:
@@ -132,10 +134,12 @@ public class GameManager : MonoBehaviour
                 {
                     case (int)GameOverOptions.Retry:
                         // restart the scene?
+                        playState = PlayState.Other;
                         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                         break;
                     case (int)GameOverOptions.Quit:
                         // return to the title screen?
+                        playState = PlayState.Other;
                         SceneManager.LoadScene(0);
                         break;
                     default:
