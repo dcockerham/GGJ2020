@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyBase))]
-public class ZigZagEnemy : MonoBehaviour
+public class ZigZagEnemy : EnemyBase
 {
-    private EnemyBase enemy;
     private float enemyDirectionX;
 
-    void Start()
+    public override void Start()
     {
-        enemy = GetComponent<EnemyBase>();
+        base.Start();
+
         SetEnemyDirection();
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        if (enemy.moveSpeedX != enemyDirectionX)
+        base.Update();
+
+        if (moveSpeedX != enemyDirectionX)
         {
             SetEnemyDirection();
         }
@@ -25,9 +26,8 @@ public class ZigZagEnemy : MonoBehaviour
 
     private void SetEnemyDirection()
     {
-        enemyDirectionX = enemy.moveSpeedX;
-        var spriteTransform = gameObject.transform.GetChild(0);
-        if (spriteTransform != null && spriteTransform.gameObject.TryGetComponent(out SpriteRenderer renderer))
+        enemyDirectionX = moveSpeedX;
+        if (gameObject.TryGetComponent(out SpriteRenderer renderer))
         {
             renderer.flipX = enemyDirectionX < 0;
         };
