@@ -10,6 +10,7 @@ public class EnemyBase : ShipBase
     public float fireDelayVariance;
 
     public bool randomizeStartDirection = false;
+    public bool ignoringBoundaries = false;
     
 
     // Start is called before the first frame update
@@ -71,7 +72,7 @@ public class EnemyBase : ShipBase
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("boundary"))
+        if (col.gameObject.CompareTag("boundary") && !ignoringBoundaries)
         {
             // if we hit the edge of the screen, reverse direction
             moveSpeedX *= -1;
