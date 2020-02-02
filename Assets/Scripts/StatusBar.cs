@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class StatusBar : MonoBehaviour
 {
+    public Transform playerReference;
     public GameObject lifePrefab;
     public Color fadeTo;
     [Min(0.001f)]
@@ -19,7 +20,7 @@ public class StatusBar : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         int numLives = 0;
-        if (player != null && player.TryGetComponent(out playerStats))
+        if (playerReference != null && playerReference.TryGetComponent(out playerStats))
         {
             numLives = (int)playerStats.healthCurrent;
         }
