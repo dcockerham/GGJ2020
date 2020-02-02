@@ -7,6 +7,9 @@ public class PlayerBase : ShipBase
     // track relevant objects
     public GameObject tractorBeam;
 
+    public float fireDelay = 0.5f;
+    protected float delayTimer;
+
     protected GameManager gameManager;
 
 
@@ -14,6 +17,7 @@ public class PlayerBase : ShipBase
     {
         base.Start();
         gameManager = GameManager.instance;
+        delayTimer = 0f;
     }
 
     // Update is called once per frame
@@ -35,10 +39,17 @@ public class PlayerBase : ShipBase
             }
             transform.position = newPos;
 
-
-            if (Input.GetKeyDown(gameManager.fireKeyCode) && canFire)
+            if (delayTimer <= 0f)
             {
-                FireBullet();
+                if (Input.GetKey(gameManager.fireKeyCode) && canFire)
+                {
+                    FireBullet();
+                    delayTimer = fireDelay;
+                }
+            }
+            else
+            {
+                delayTimer -= Time.deltaTime;
             }
 
             if (Input.GetKey(gameManager.tractorKeyCode) != tractorBeam.activeSelf)

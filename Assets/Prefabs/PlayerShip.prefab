@@ -468,6 +468,7 @@ MonoBehaviour:
   canMove: 1
   canFire: 1
   tractorBeam: {fileID: 409847170051392254}
+  fireDelay: 0.4
 --- !u!58 &5840423232587576560
 CircleCollider2D:
   m_ObjectHideFlags: 0

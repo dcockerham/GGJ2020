@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3807254046057205338}
   - component: {fileID: 1629763633901728811}
-  - component: {fileID: 3807254046057205339}
+  - component: {fileID: 2787820689591852429}
   m_Layer: 0
   m_Name: BomberShip
   m_TagString: enemy
@@ -91,13 +91,13 @@ MonoBehaviour:
   damageSound: {fileID: 0}
   canMove: 1
   canFire: 1
-  fireDelay: 5
-  fireDelayVariance: 2
+  fireDelay: 3
+  fireDelayVariance: 1
   randomizeStartDirection: 1
   ignoringBoundaries: 0
   currentBomb: {fileID: 2893861832227514277}
---- !u!58 &3807254046057205339
-CircleCollider2D:
+--- !u!61 &2787820689591852429
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,9 +109,19 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.15}
+  m_Offset: {x: -0.00000011920929, y: 0.57705355}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.65
+  m_Size: {x: 1.7150447, y: 0.43107414}
+  m_EdgeRadius: 0
 --- !u!1 &3807254046719121225
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bomber_bomb
+      objectReference: {fileID: 0}
+    - target: {fileID: 9163175136080832697, guid: c6ab9d9fe6c78b54ba920408b852cce7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9163175136080832698, guid: c6ab9d9fe6c78b54ba920408b852cce7,
         type: 3}

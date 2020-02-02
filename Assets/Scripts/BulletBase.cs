@@ -35,7 +35,7 @@ public class BulletBase : MonoBehaviour
         transform.Translate(moveSpeedX * Time.deltaTime, moveSpeedY * Time.deltaTime, 0f);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("boundary"))
         {

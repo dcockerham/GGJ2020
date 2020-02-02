@@ -22,6 +22,15 @@ public class BombBullet : BulletBase
         }
     }
 
+    public override void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("boundary") || col.gameObject.CompareTag("bullet"))
+        {
+            // if we hit the edge of the screen (or another bullet), we're done! impact!
+            Impact();
+        }
+    }
+
     public override void Impact()
     {
         if (explodeObject)
