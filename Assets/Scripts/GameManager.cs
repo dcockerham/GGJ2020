@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,13 +23,20 @@ public class GameManager : MonoBehaviour
         Title,
         Playing,
         Pause,
+        GameOver,
         Other,
     }
     public PlayState playState;
 
-    public enum MenuOptions
+    public enum PauseOptions
     {
         Continue,
+        Retry,
+        Quit,
+        NUMBER_OF_MENU_OPTIONS,
+    }
+    public enum GameOverOptions
+    {
         Retry,
         Quit,
         NUMBER_OF_MENU_OPTIONS,
@@ -36,6 +44,8 @@ public class GameManager : MonoBehaviour
     public int menuSelect;
     public GameObject pausePanel;
     public GameObject pauseSelector;
+    public GameObject gameOverPanel;
+    public GameObject gameOverSelector;
 
 
     private void Awake()
@@ -50,42 +60,30 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(upKeyCode))
             {
-                SetSelectorPos(menuSelect - 1 + ((menuSelect == 0) ? (int)MenuOptions.NUMBER_OF_MENU_OPTIONS : 0));
-                /*menuSelect--;
-                if (menuSelect < 0)
-                {
-                    menuSelect += (int)MenuOptions.NUMBER_OF_MENU_OPTIONS;
-                }*/
+                SetPauseSelector(menuSelect - 1 + ((menuSelect == 0) ? (int)PauseOptions.NUMBER_OF_MENU_OPTIONS : 0));
             }
             if (Input.GetKeyDown(downKeyCode))
             {
-                SetSelectorPos(menuSelect + 1 - ((menuSelect+1 == (int)MenuOptions.NUMBER_OF_MENU_OPTIONS) ? (int)MenuOptions.NUMBER_OF_MENU_OPTIONS : 0));
-                /*menuSelect++;
-                if (menuSelect >= (int)MenuOptions.NUMBER_OF_MENU_OPTIONS)
-                {
-                    menuSelect -= (int)MenuOptions.NUMBER_OF_MENU_OPTIONS;
-                }*/
+                SetPauseSelector(menuSelect + 1 - ((menuSelect+1 == (int)PauseOptions.NUMBER_OF_MENU_OPTIONS) ? (int)PauseOptions.NUMBER_OF_MENU_OPTIONS : 0));
             }
-            if (Input.GetKeyDown(fireKeyCode))
+            if (Input.GetKeyDown(fireKeyCode) || Input.GetKeyDown(pauseKeyCode))
             {
                 switch (menuSelect)
                 {
-                    case (int)MenuOptions.Continue:
+                    case (int)PauseOptions.Continue:
                         PauseGame();
                         break;
-                    case (int)MenuOptions.Retry:
+                    case (int)PauseOptions.Retry:
                         // restart the scene?
+                        PauseGame();
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                         break;
-                    case (int)MenuOptions.Quit:
+                    case (int)PauseOptions.Quit:
                         // return to the title screen?
                         break;
                     default:
                         break;
                 }
-            }
-            if (Input.GetKeyDown(pauseKeyCode))
-            {
-                PauseGame();
             }
         }
         else if (playState == PlayState.Playing)
@@ -93,6 +91,32 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(pauseKeyCode))
             {
                 PauseGame();
+            }
+        }
+        else if (playState == PlayState.GameOver)
+        {
+            if (Input.GetKeyDown(upKeyCode))
+            {
+                SetGameOverSelector(menuSelect - 1 + ((menuSelect == 0) ? (int)GameOverOptions.NUMBER_OF_MENU_OPTIONS : 0));
+            }
+            if (Input.GetKeyDown(downKeyCode))
+            {
+                SetGameOverSelector(menuSelect + 1 - ((menuSelect + 1 == (int)GameOverOptions.NUMBER_OF_MENU_OPTIONS) ? (int)GameOverOptions.NUMBER_OF_MENU_OPTIONS : 0));
+            }
+            if (Input.GetKeyDown(fireKeyCode) || Input.GetKeyDown(pauseKeyCode))
+            {
+                switch (menuSelect)
+                {
+                    case (int)GameOverOptions.Retry:
+                        // restart the scene?
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                        break;
+                    case (int)GameOverOptions.Quit:
+                        // return to the title screen?
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -117,6 +141,9 @@ public class GameManager : MonoBehaviour
         if (playState == PlayState.Playing)
         {
             print("_//GAME OVER\\\\_");
+            playState = PlayState.GameOver;
+            gameOverPanel.SetActive(true);
+            SetGameOverSelector(0);
         }
     }
 
@@ -126,7 +153,7 @@ public class GameManager : MonoBehaviour
         {
             playState = PlayState.Pause;
             pausePanel.SetActive(true);
-            SetSelectorPos(0);
+            SetPauseSelector(0);
             Time.timeScale = 0f;
         }
         else if (playState == PlayState.Pause)
@@ -137,11 +164,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetSelectorPos(int selectorIndex)
+    public void SetPauseSelector(int selectorIndex)
     {
         menuSelect = selectorIndex;
         Vector3 newPos = pauseSelector.transform.localPosition;
         newPos.y = 30 - menuSelect * 30;
         pauseSelector.transform.localPosition = newPos;
+    }
+
+    public void SetGameOverSelector(int selectorIndex)
+    {
+        menuSelect = selectorIndex;
+        Vector3 newPos = gameOverSelector.transform.localPosition;
+        newPos.y = -30 - menuSelect * 30;
+        gameOverSelector.transform.localPosition = newPos;
     }
 }
