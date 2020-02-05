@@ -9,6 +9,7 @@ public class EnemyBase : ShipBase
     public float fireDelay;
     public float fireDelayVariance;
 
+    public bool isBoss = false;
     public bool randomizeStartDirection = false;
     public bool ignoringBoundaries = false;
     
@@ -18,7 +19,7 @@ public class EnemyBase : ShipBase
     {
         // set up difficulty mods
         DifficultyManager difficultyManager = DifficultyManager.instance;
-        healthMax = healthMax * difficultyManager.getHealthMod();
+        healthMax = healthMax * (!isBoss ? difficultyManager.getHealthMod() : difficultyManager.getBossHealthMod());
         moveSpeedX *= difficultyManager.getMoveSpeedMod();
         moveSpeedY *= difficultyManager.getMoveSpeedMod();
         fireDelay /= difficultyManager.getFiringSpeedMod();
@@ -36,36 +37,45 @@ public class EnemyBase : ShipBase
         }
 
         // add the enemy to the game manager for tracking
-        GameManager.instance.EnemySpawned();
+        if (gameManager)
+        {
+            gameManager.EnemySpawned();
+        }
     }
 
-    private void OnDestroy()
+    public virtual void OnDestroy()
     {
         // remove the enemy from the game manager
-        GameManager.instance.EnemyDestroyed();
+        if (gameManager)
+        {
+            gameManager.EnemyDestroyed();
+        }
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        // handle movement
-        Vector3 newPos = transform.position;
-        if (canMove)
+        if (gameManager.playState != GameManager.PlayState.Title && gameManager.playState != GameManager.PlayState.Pause)
         {
-            //transform.Translate(moveSpeedX * Time.deltaTime, moveSpeedY * Time.deltaTime, 0f);
-            newPos.x += moveSpeedX * Time.deltaTime;
-            newPos.y += moveSpeedY * Time.deltaTime;
-        }
-        transform.position = newPos;
-
-        // handle firing
-        if (canFire)
-        {
-            fireTimer -= Time.deltaTime;
-            if (fireTimer <= 0f)
+            // handle movement
+            Vector3 newPos = transform.position;
+            if (canMove)
             {
-                FireBullet();
-                fireTimer = fireDelay + Random.Range(-fireDelayVariance, fireDelayVariance);
+                //transform.Translate(moveSpeedX * Time.deltaTime, moveSpeedY * Time.deltaTime, 0f);
+                newPos.x += moveSpeedX * Time.deltaTime;
+                newPos.y += moveSpeedY * Time.deltaTime;
+            }
+            transform.position = newPos;
+
+            // handle firing
+            if (canFire)
+            {
+                fireTimer -= Time.deltaTime;
+                if (fireTimer <= 0f)
+                {
+                    FireBullet();
+                    fireTimer = fireDelay + Random.Range(-fireDelayVariance, fireDelayVariance);
+                }
             }
         }
     }

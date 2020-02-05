@@ -8,13 +8,16 @@ public class DifficultyManager : MonoBehaviour
 
     public enum Difficulty
     {
-        Easy = 0,
+        SuperEasy = 0,
+        Easy,
         Medium,
         Hard,
+        Deadly,
     }
     public Difficulty difficulty = Difficulty.Medium;
 
     public List<float> enemyHealthMod;
+    public List<float> bossHealthMod;
     public List<float> enemyDamageMod;
     public List<float> enemyMoveSpeed;
     public List<float> enemyBulletSpeed;
@@ -24,11 +27,17 @@ public class DifficultyManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        difficulty = (Difficulty)PlayerPrefs.GetInt("difficulty", (int)difficulty);
     }
 
     public float getHealthMod()
     {
         return ((int)difficulty < enemyHealthMod.Count) ? enemyHealthMod[(int)difficulty] : 1;
+    }
+
+    public float getBossHealthMod()
+    {
+        return ((int)difficulty < bossHealthMod.Count) ? bossHealthMod[(int)difficulty] : 1;
     }
 
     public float getDamageMod()

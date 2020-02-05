@@ -34,4 +34,13 @@ public class EnemyBossVolt : EnemyBase
             }
         }
     }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        foreach (LightningBolt bolt in boltList)
+        {
+            bolt.gameObject.SetActive(false);
+        }
+    }
 }

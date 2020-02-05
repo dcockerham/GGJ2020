@@ -12,10 +12,12 @@ public class EnemyBossSkull : EnemyBase
     public float beamDelay;
     public float beamDelayVariance;
     public float beamFiringLength = 5f;
+    public float fireFadeTime = 0.5f;
     protected float beamFiringTimer;
 
     public bool isShaking;
     public bool isFiringBeam;
+    public bool fireFading;
     public bool soundStarting;
 
     public AudioSource soundBeamStart;
@@ -30,9 +32,7 @@ public class EnemyBossSkull : EnemyBase
         // randomize the firing timer
         beamTimer = beamDelay + Random.Range(-beamDelayVariance, beamDelayVariance);
 
-        isShaking = false;
-        isFiringBeam = false;
-        soundStarting = false;
+        isShaking = isFiringBeam = fireFading = soundStarting = false;
     }
 
     // Update is called once per frame
@@ -69,6 +69,13 @@ public class EnemyBossSkull : EnemyBase
                 soundStarting = false;
             }
         }
+        else if (fireFading && myBeam)
+        {
+            beamFiringTimer -= Time.deltaTime;
+            Vector3 newScale = myBeam.transform.localScale;
+            newScale.x = Mathf.Lerp(3f, 0f, (fireFadeTime - beamFiringTimer) / fireFadeTime);
+            myBeam.transform.localScale = newScale;
+        }
     }
 
     void ChargeWeapon()
@@ -91,12 +98,16 @@ public class EnemyBossSkull : EnemyBase
         soundBeamStart.Play();
         soundStarting = true;
         yield return new WaitForSeconds(beamFiringLength);
-        beamTimer = beamDelay + Random.Range(-beamDelayVariance, beamDelayVariance);
-        Destroy(myBeam);
-        canFire = true;
-        isFiringBeam = false;
         soundBeamLoop.Stop();
         soundBeamEnd.Play();
         beamParticles.SetActive(false);
+        fireFading = true;
+        isFiringBeam = false;
+        beamFiringTimer = fireFadeTime;
+        yield return new WaitForSeconds(fireFadeTime);
+        beamTimer = beamDelay + Random.Range(-beamDelayVariance, beamDelayVariance);
+        Destroy(myBeam);
+        canFire = true;
+        fireFading = false;
     }
 }

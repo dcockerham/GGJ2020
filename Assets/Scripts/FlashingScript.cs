@@ -65,4 +65,18 @@ public class FlashingScript : MonoBehaviour
         flashCount = 0;
         sprite.color = flashColor;
     }
+
+    public void FlashOut()
+    {
+        flashTimer = Time.time + flashLength;
+        isFlashing = true;
+        flashCount = numberOfFlashes-1;
+        sprite.color = flashColor;
+        Invoke("DeactivateBolt", flashLength);
+    }
+
+    void DeactivateBolt()
+    {
+        gameObject.SetActive(false);
+    }
 }

@@ -10,8 +10,6 @@ public class PlayerBase : ShipBase
     public float fireDelay = 0.5f;
     protected float delayTimer;
 
-    protected GameManager gameManager;
-
     public Sprite damagedSprite1;
     public Sprite damagedSprite2;
     protected SpriteRenderer spriteRenderer;
@@ -20,7 +18,6 @@ public class PlayerBase : ShipBase
     public override void Start()
     {
         base.Start();
-        gameManager = GameManager.instance;
         delayTimer = 0f;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -54,7 +51,14 @@ public class PlayerBase : ShipBase
             }
             else
             {
-                delayTimer -= Time.deltaTime;
+                if (Input.GetKeyUp(gameManager.fireKeyCode))
+                {
+                    delayTimer = 0f;
+                }
+                else
+                {
+                    delayTimer -= Time.deltaTime;
+                }
             }
 
             if (Input.GetKey(gameManager.tractorKeyCode) != tractorBeam.activeSelf)
@@ -62,36 +66,47 @@ public class PlayerBase : ShipBase
                 tractorBeam.SetActive(!tractorBeam.activeSelf);
             }
         }
+        else if (gameManager.playState == GameManager.PlayState.Victory)
+        {
+            transform.Translate(0f, 10f * Time.deltaTime, 0f);
+            GetComponent<Collider2D>().isTrigger = true;
+        }
     }
 
     private void OnDestroy()
     {
-        GameManager.instance.GameOver();
+        if (GameManager.instance)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 
     public override void TakeDamage(float damage)
     {
-        healthCurrent -= damage;
-        if (healthCurrent > 0)
+        if (gameManager.playState == GameManager.PlayState.Playing)
         {
-            if (damageSound)
+            healthCurrent -= damage;
+            if (healthCurrent > 0)
             {
-                damageSound.Play();
-            }
+                if (damageSound)
+                {
+                    damageSound.Play();
+                }
 
-            if (healthCurrent <= 1)
-            {
-                spriteRenderer.sprite = damagedSprite2;
+                if (healthCurrent <= 1)
+                {
+                    spriteRenderer.sprite = damagedSprite2;
+                }
+                else if (healthCurrent <= 2)
+                {
+                    spriteRenderer.sprite = damagedSprite1;
+                }
             }
-            else if (healthCurrent <= 2)
+            else
             {
-                spriteRenderer.sprite = damagedSprite1;
+                // BOOM! BLOW UP!
+                Die();
             }
-        }
-        else
-        {
-            // BOOM! BLOW UP!
-            Die();
         }
     }
 }

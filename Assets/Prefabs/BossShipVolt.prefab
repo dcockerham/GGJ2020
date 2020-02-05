@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 6540002446327211212}
   - component: {fileID: 4003835514211416237}
   m_Layer: 0
-  m_Name: BossShip 1
+  m_Name: BossShipVolt
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipTeam: 1
-  healthMax: 30
+  healthMax: 35
   healthCurrent: 0
   moveSpeedX: 0
   moveSpeedY: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   canFire: 1
   fireDelay: 1
   fireDelayVariance: 0.5
+  isBoss: 1
   randomizeStartDirection: 0
   ignoringBoundaries: 0
   boltList:

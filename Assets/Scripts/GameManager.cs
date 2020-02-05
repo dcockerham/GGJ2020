@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         Playing,
         Pause,
         GameOver,
+        Victory,
         Other,
     }
     public PlayState playState;
@@ -69,6 +70,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+
         if (playState == PlayState.Title)
         {
             if (Input.GetKeyDown(fireKeyCode) || Input.GetKeyDown(pauseKeyCode))
@@ -160,9 +170,14 @@ public class GameManager : MonoBehaviour
         if (playState == PlayState.Playing && numLivingEnemies <= 0)
         {
             print("~=STAGE CLEAR=~");
-            playState = PlayState.Other;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            playState = PlayState.Victory;
+            Invoke("Victory", 2.0f);
         }
+    }
+
+    public void Victory()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void GameOver()

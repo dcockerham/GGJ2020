@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipTeam: 1
-  healthMax: 30
+  healthMax: 40
   healthCurrent: 0
   moveSpeedX: 1.5
   moveSpeedY: 0
@@ -339,6 +339,7 @@ MonoBehaviour:
   canFire: 1
   fireDelay: 2
   fireDelayVariance: 0.5
+  isBoss: 1
   randomizeStartDirection: 0
   ignoringBoundaries: 0
   beamWeapon: {fileID: 6635034503317694274, guid: e326ae52ea9bf9e4f891546199c1218e,
@@ -348,8 +349,10 @@ MonoBehaviour:
   beamDelay: 6
   beamDelayVariance: 2
   beamFiringLength: 5
+  fireFadeTime: 0.5
   isShaking: 0
   isFiringBeam: 0
+  fireFading: 0
   soundStarting: 0
   soundBeamStart: {fileID: 2442600423734579171}
   soundBeamLoop: {fileID: 1965683023061535103}

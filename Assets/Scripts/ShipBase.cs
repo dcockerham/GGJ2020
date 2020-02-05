@@ -10,7 +10,7 @@ public class ShipBase : MonoBehaviour
         PlayerTeam,
         EnemyTeam,
     }
-    public Team shipTeam;
+    public Team shipTeam = Team.EnemyTeam;
     
     // health of the ship
     public float healthMax;
@@ -32,11 +32,15 @@ public class ShipBase : MonoBehaviour
     public bool canMove = true;
     public bool canFire = true;
 
+    // hold a reference to the gameManager
+    protected GameManager gameManager;
+
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         healthCurrent = healthMax;
+        gameManager = GameManager.instance;
     }
 
     public virtual void FireBullet()

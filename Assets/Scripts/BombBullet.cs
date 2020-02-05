@@ -7,8 +7,7 @@ public class BombBullet : BulletBase
     public GameObject explodeObject;
     public bool isDocked;
     
-    // Start is called before the first frame update
-    public override void Start()
+    void Awake()
     {
         isDocked = true;
     }

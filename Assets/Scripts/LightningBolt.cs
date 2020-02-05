@@ -33,7 +33,8 @@ public class LightningBolt : BulletBase
         else if (Time.time >= boltTimer)
         {
             boltCollider.enabled = false;
-            gameObject.SetActive(false);
+            boltFlasher.FlashOut();
+            //gameObject.SetActive(false);
         }
     }
 
